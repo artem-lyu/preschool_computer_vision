@@ -3,15 +3,6 @@ import cv2
 import json
 
 if __name__ == "__main__":
-    # model = YOLO('yolo11l-cls.pt')
-    # results = model.train(data="data", epochs=25, imgsz=900, patience=3)
-
-    # model = YOLO('yolo11m.pt')
-    # results = model("private_data/child_15_session_08_redacted_internal.mp4", show=True, classes=[0,1], conf=0.8)
-    
-    # model = YOLO("runs/classify/train37/weights/best.pt")
-    # results = model("private_data/child_15_session_08_redacted_internal.mp4", show=False, classes=[0,1], conf=0.8)
-    
     detection_model = YOLO('yolo11m.pt')
 
     classification_model = YOLO("runs/classify/train37/weights/best.pt")
@@ -22,8 +13,9 @@ if __name__ == "__main__":
         ret, frame = cap.read()
         if not ret:
             break
-
-        results = detection_model(frame)
+        
+        # only pass through objects in the person class
+        results = detection_model(frame, classes=[0,1])
 
         for result in results:
             boxes = result.boxes
