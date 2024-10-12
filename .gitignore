@@ -1,3 +1,4 @@
 data/
 .venv/
 runs/**/*.jpg
+private_data/
